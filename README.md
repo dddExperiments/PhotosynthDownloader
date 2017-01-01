@@ -22,7 +22,7 @@ I'm using ImDisk: http://www.ltr-data.se/opencode.html/.
 - Synth downloaded with this package won't work directly with the official offlineViewer released by Microsoft.
   I've updated the offlineViewer to support both official and unofficial ps2 zip file.
   The behind the scene issue is that official zip are using '\\' as path separator instead of '/'.
-  I've updated the viewer to support both '//' and '\' zip path separator.
+  I've updated the viewer to support both '\\' and '/' zip path separator.
 - Downloading panorama is not implemented by this downloader (only ps1/ps2).
 
 Please use responsively.
