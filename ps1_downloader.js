@@ -18,9 +18,11 @@ var _debug_log = false;
 // point cloud
 https://cdn3.ps1.photosynth.net/synth/s01001300-ALQHJW1DeSM/metadata.synth_files/0.json
 https://cdn3.ps1.photosynth.net/synth/s01001300-ALQHJW1DeSM/metadata.synth_files/points_0_0.bin
+https://cdn3.ps1.photosynth.net/synth/s01001300-ALQHJW1DeSM/metadata.synth_files/thumb.jpg
 
 // seadragon collection
 https://cdn3.ps1.photosynth.net/synth/s01001300-ALQHJW1DeSM/metadata.dzc -> MaxLevel=?
+https://cdn3.ps1.photosynth.net/synth/s01001300-ALQHJW1DeSM/metadata_files/AppData/pscollection.bin
 https://cdn3.ps1.photosynth.net/synth/s01001300-ALQHJW1DeSM/metadata_files/0/0_0.jpg
 https://cdn3.ps1.photosynth.net/synth/s01001300-ALQHJW1DeSM/metadata_files/5/0_0.jpg
 
@@ -99,6 +101,8 @@ function DownloadPS1SoapRequest(output_folder, guid, onComplete) {
 
 function DownloadPS1Images(output_folder, collection_url, onComplete) {
 	fs_extra.mkdirsSync(path.join(output_folder, "collection"));
+	fs_extra.mkdirsSync(path.join(output_folder, "collection", "AppData"));
+
 	//metadata.dsc
 	var dl = new DownloadableObject();	
 	dl.Init(path.join(output_folder, "collection", "metadata.dsc"), collection_url);
@@ -138,6 +142,16 @@ function DownloadPS1Images(output_folder, collection_url, onComplete) {
 				dl_thumbs.push(dl_thumb);
 			});
 			
+			// global synth 100x100 thumb.jpg
+			var dl_thumb = new DownloadableObject();
+			dl_thumb.Init(path.join(output_folder, "thumb.jpg"), collection_url.replace("metadata.dzc", "metadata.synth_files/thumb.jpg"));
+			dl_thumbs.push(dl_thumb);
+			
+			// collection/AppData/pscollection.bin
+			var dl_pscollection = new DownloadableObject();
+			dl_pscollection.Init(path.join(output_folder, "collection", "AppData", "pscollection.bin"), collection_url.replace("metadata.dzc", "metadata_files/AppData/pscollection.bin"));
+			dl_thumbs.push(dl_pscollection);			
+			
 			if (_debug_log) { console.log("Downloading: " + urls.length + " images"); }
 			
 			dl.SaveToDisk(function() {
@@ -161,7 +175,6 @@ function DownloadPS1Images(output_folder, collection_url, onComplete) {
 }
 
 function DownloadPS1BatchThumbs(list, onComplete) {
-	console.log("Downloading " + list.length + " thumbs.");
 	var q = async.queue(function(task, callback) {
 		task.DownloadToFile(function() {
 			task.Clear();
