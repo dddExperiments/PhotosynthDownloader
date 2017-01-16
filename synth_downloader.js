@@ -26,7 +26,7 @@ if (args.length !== 2) {
 	console.log("you need to provide guid of photosynth and output folder");
 }
 else {
-	var guid = args[0];
+	var guid = args[0].toLowerCase();
 	var parent_folder = args[1]
 	console.log("Downloading photosynth: " + guid + " to " + parent_folder);
 	

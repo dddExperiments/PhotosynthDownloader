@@ -41,7 +41,7 @@ function DownloadPS1(json, output_folder, guid, parent_folder) {
 	var json_url = collection_url.replace("metadata.dzc", "metadata.synth_files/0.json");
 	
 	DownloadPS1SoapRequest(output_folder, guid, function() {
-		DownloadPS1PointCloud(output_folder, json_url, guid, function() {
+		DownloadPS1PointCloud(output_folder, json_url, function() {
 			DownloadPS1Images(output_folder, collection_url, function() {
 				console.log("Done downloading: " + guid);
 				zipFolder(output_folder, path.join(parent_folder, guid + ".zip"), function(err) {
@@ -360,7 +360,7 @@ function DownloadSingleSeadragonImage(task, callback) {
 	});	
 }
 
-function DownloadPS1PointCloud(output_folder, json_url, guid, onComplete) {
+function DownloadPS1PointCloud(output_folder, json_url, onComplete) {
 	
 	var root_url = json_url.replace("0.json", "");
 	
@@ -369,11 +369,9 @@ function DownloadPS1PointCloud(output_folder, json_url, guid, onComplete) {
 	dl.Init(path.join(output_folder, "0.json"), json_url);
 	dl.DownloadToMemory(function() {
 		var json = dl.ParseJson();
-		var root = json.l;
-		if (root[guid]) {
-			root = root[guid];
-		} else {
-			root = json.l[""];
+		var root;
+		for (var guid in json["l"]) {
+			root = json["l"][guid];
 		}
 		
 		var dl_bins = [];
