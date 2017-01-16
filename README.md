@@ -24,6 +24,7 @@ I'm using ImDisk: http://www.ltr-data.se/opencode.html/.
   The behind the scene issue is that official zip are using '\\' as path separator instead of '/'.
   I've updated the viewer to support both '\\' and '/' zip path separator.
 - Downloading panorama is not implemented by this downloader (only ps1/ps2).
+- Synth downloading can fail with ETIMEDOUT error -> just retry downloading: it will resume exactly were it stopped.
 
 Please use responsively.
 
