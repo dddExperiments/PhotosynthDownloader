@@ -13,12 +13,10 @@ function zipFolder(srcFolder, zipFilePath, callback) {
 
 	zipArchive.pipe(output);
 
-	zipArchive.bulk([
-		{ cwd: srcFolder, src: ['**/*'], expand: true }
-	]);
+	zipArchive.glob("**/*", {cwd: srcFolder});
 
 	zipArchive.finalize(function(err, bytes) {
-		if(err) {
+		if (err) {
 			callback(err);
 		}
 	});
