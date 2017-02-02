@@ -9,6 +9,7 @@ var path     = require('path');
 var DownloadableObject = require('./downloadable_object').DownloadableObject;
 var DownloadPS1 = require('./ps1_downloader');
 var DownloadPS2 = require('./ps2_downloader');
+var DownloadPano = require('./pano_downloader');
 
 // PS1: 1e509490-5657-453d-a2f6-2e55d14ae512
 // PS2: 6d08dbf0-a0be-4185-9a5a-dec8bd45a4b3
@@ -16,11 +17,6 @@ var DownloadPS2 = require('./ps2_downloader');
 // Pano ice: d724f8fa-f7a1-454f-809b-3d2f3a2976e7
 
 var _rest_api_root_url = "https://photosynth.net/rest/2014-08/";
-
-
-function DownloadPanorama(json, output_folder, guid) {
-	console.log("Panorama download is not supported yet");
-}
 
 if (args.length !== 2) {
 	console.log("you need to provide guid of photosynth and output folder");
@@ -45,7 +41,7 @@ else {
 				dl.SaveToDisk(function() {
 					var json = dl.ParseJson();
 					if (json.Panorama) {
-						DownloadPanorama(json, output_folder, guid);
+						DownloadPano(json, output_folder, guid, parent_folder);
 					} else if (json.Synth) {
 						DownloadPS1(json, output_folder, guid, parent_folder);
 					} else if (json.SynthPacket) {
