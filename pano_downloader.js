@@ -37,7 +37,7 @@ function DownloadPano(json, output_folder, guid, parent_folder) {
 	
 	var dl_items = [];
 	
-	//Download previous json file iterations.
+	//Download all json files [0.json, 1.json, 2.json ..., x.json]
 	var json_index = parseInt(json_filename.replace(".json"), 10);
 	for (var i=0; i<=json_index; ++i) {
 		var current_json_filename = "" + i + ".json";
@@ -113,18 +113,9 @@ function DownloadPanoMetadata(json_url, json_filename, output_folder, onComplete
 	});
 }
 
-function CreatePoint(point, w, h) {
-	var p = point;
-	var eps = 0.1;
-	//p.x = Math.max(Math.min(p.x, w-eps), eps);
-	//p.y = Math.max(Math.min(p.y, h-eps), eps);
-	return p;
-}
-
 function DownloadFace(face, face_name, output_folder) {
 	var dimension = face.d;
 	var vertices = face.clip.vertices;
-	var loops = face.clip.loops;
 	
 	var width = dimension[0];
 	var height = dimension[1];
