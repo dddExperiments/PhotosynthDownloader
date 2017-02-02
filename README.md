@@ -26,6 +26,10 @@ I'm using ImDisk: http://www.ltr-data.se/opencode.html/.
 - Downloading panorama is not implemented by this downloader (only ps1/ps2).
 - Synth downloading can fail with ETIMEDOUT error -> just retry downloading: it will resume exactly were it stopped.
 
+### Mass downloader:
+I've added a mass downloader to process several synths at once.
+See doc in `mass_synth_downloader.js` (for expert user).
+
 Please use responsively.
 
 --Henri
