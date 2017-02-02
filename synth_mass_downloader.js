@@ -75,7 +75,10 @@ function DownloadSynth(guid, callback, num_retry) {
 			}, _retry_pause_duration);
 		} else {
 			// Move file from 'temp' to 'output'.
-			fs.renameSync(path.join(_temp_folder, guid + ".zip"), path.join(_output_folder, guid + ".zip"));
+			fs_extra.copySync(path.join(_temp_folder, guid + ".zip"), path.join(_output_folder, guid + ".zip.tmp"), {overwrite: true});
+			fs_extra.removeSync(path.join(_temp_folder, guid + ".zip"));
+			fs_extra.removeSync(path.join(_output_folder, guid + ".zip"));
+			fs.renameSync(path.join(_output_folder, guid + ".zip.tmp"), path.join(_output_folder, guid + ".zip"));
 			callback();
 		}
 	});
