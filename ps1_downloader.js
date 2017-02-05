@@ -310,7 +310,7 @@ function DownloadSingleSeadragonImage(task, callback) {
 
 	task.ParseXml(function(result) {
 
-		var image_folder = task.filepath.replace("\\0.dzi", "");
+		var image_folder = task.filepath.replace("0.dzi", "");
 		var image_root_url = task.url.replace(".dzi", "_files");
 		var dl_tiles = [];
 	
@@ -322,7 +322,7 @@ function DownloadSingleSeadragonImage(task, callback) {
 		var num_rows = Math.ceil(height / tilesize);
 		var num_levels = GetPOT(Math.max(width, height));
 		while (num_levels >= 0) {
-			var current_level_folder = image_folder + "/" + num_levels;
+			var current_level_folder = image_folder + num_levels;
 			fs_extra.mkdirsSync(current_level_folder);
 			for (var x=0; x<num_columns; ++x) {
 				for (var y=0; y<num_rows; ++y) {
