@@ -75,10 +75,15 @@ function DownloadSynth(guid, callback, num_retry) {
 			}, _retry_pause_duration);
 		} else {
 			// Move file from 'temp' to 'output'.
-			fs_extra.copySync(path.join(_temp_folder, guid + ".zip"), path.join(_output_folder, guid + ".zip.tmp"), {overwrite: true});
-			fs_extra.removeSync(path.join(_temp_folder, guid + ".zip"));
-			fs_extra.removeSync(path.join(_output_folder, guid + ".zip"));
-			fs.renameSync(path.join(_output_folder, guid + ".zip.tmp"), path.join(_output_folder, guid + ".zip"));
+			var temp_zip_synth = path.join(_temp_folder, guid + ".zip");
+			if (fs.existsSync(temp_zip_synth)) {
+				fs_extra.copySync(temp_zip_synth, path.join(_output_folder, guid + ".zip.tmp"), {overwrite: true});
+				fs_extra.removeSync(path.join(_temp_folder, guid + ".zip"));
+				fs_extra.removeSync(path.join(_output_folder, guid + ".zip"));
+				fs.renameSync(path.join(_output_folder, guid + ".zip.tmp"), path.join(_output_folder, guid + ".zip"));
+			} else {
+				console.log("Zip of synth " + guid + " not found.");
+			}
 			callback();
 		}
 	});
